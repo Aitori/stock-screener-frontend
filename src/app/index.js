@@ -2,8 +2,8 @@ import React from "react";
 import "./styles.scss";
 // component imports
 import Button from "../components/button";
-import Chart from "../components/chart";
-
+import Stock from "../components/stock";
+import data from "../tempdata";
 const App = () => {
   return (
     <div className="app">
@@ -14,7 +14,9 @@ const App = () => {
         </Button>
       </div>
       <div className="app-content">
-        <Chart />
+        {data.map((e) => {
+          return <Stock key={e.ticker} {...e}/>;
+        })}
       </div>
     </div>
   );

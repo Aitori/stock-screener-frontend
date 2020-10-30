@@ -1,0 +1,16 @@
+.stock {
+  display: flex;
+  flex-direction: row;
+
+  color: peachpuff;
+
+  &-info-box {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+  }
+
+  &-info {
+    padding: 10px;
+  }
+}

@@ -1,12 +1,11 @@
 import React from "react";
 import CanvasJSReact from "../../lib/canvasjs.react";
 
-const Chart = () => {
+const Chart = (props) => {
   let CanvasJSChart = CanvasJSReact.CanvasJSChart;
+  const dataPoints =
+    props.priceData == null ? [{ x: 0, y: 0 }] : props.priceData;
   const options = {
-    title: {
-      text: "AAPL",
-    },
     theme: "dark1",
     axisX: {
       gridThickness: 0,
@@ -39,13 +38,7 @@ const Chart = () => {
     data: [
       {
         type: "line",
-        dataPoints: [
-          { label: "2012", y: 10 },
-          { label: "2015", y: 30 },
-          { label: "2018", y: 50 },
-          { label: "2021", y: 200 },
-          { label: "2024", y: 5 },
-        ],
+        dataPoints: dataPoints,
       },
     ],
   };
