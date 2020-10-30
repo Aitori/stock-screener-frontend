@@ -1,0 +1,28 @@
+.app {
+  display: flex;
+  flex-direction: column;
+
+  padding: 20px;
+
+  background: #313131;
+
+  &-nav {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-between;
+
+    margin: 0 0 10px 0;
+  }
+
+  &-title {
+    color: peachpuff;
+    font-size: 20px;
+  }
+
+  &-content {
+    width: 100%;
+
+    border: 1px solid black;
+  }
+}

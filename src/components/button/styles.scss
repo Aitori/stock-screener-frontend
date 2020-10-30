@@ -1,0 +1,13 @@
+.button {
+  border: 1px black solid;
+  user-select: none;
+  transition: .5s;
+  &:hover {
+    cursor: pointer;
+    transform: scale(5);
+  }
+
+  &:active {
+    transform: scale(1.1);
+  }
+}
