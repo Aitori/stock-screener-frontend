@@ -4,6 +4,9 @@ import configData from "../config.json";
 
 // component imports
 import Chart from "../components/chart";
+import Stock from "../components/stock";
+import { CSSTransition } from "react-transition-group";
+
 const App = () => {
   const [stockData, setStockData] = useState();
   const [allTickers, setAllTickers] = useState();
@@ -11,6 +14,8 @@ const App = () => {
   const [isBusy, setIsBusy] = useState(true);
   const [isBusyT, setIsBusyT] = useState(true);
   const [filterText, setFilterText] = useState("");
+  const [currTicker, setCurrTicker] = useState("");
+  const [alternate, setAlternate] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       fetch(configData.ENDPOINT + "/get_data/spy", {
@@ -45,8 +50,19 @@ const App = () => {
   return (
     <div className="app">
       <div className="app-nav">
-        <div className="app-title">Stock Screener</div>
-        <div className="app-title app-end"> SPY </div>
+        <div
+          className={`app-title${currTicker === "" ? "" : " app-clickable"}`}
+          onClick={() => {
+            if (currTicker !== "") {
+              setCurrTicker("");
+            }
+          }}
+        >
+          {currTicker === "" ? "Stock Screener" : "Back"}
+        </div>
+        <div className="app-title app-end">
+          {currTicker === "" ? "SPY" : currTicker}
+        </div>
         <div className="app-tilt">
           <input
             value={filterText}
@@ -68,18 +84,54 @@ const App = () => {
               allTickers
                 .filter((s) => s.includes(filterText))
                 .map((e) => (
-                  <div key={e} className="app-tracked-list-content">
+                  <div
+                    key={e}
+                    className="app-tracked-list-content"
+                    onClick={() => {
+                      setCurrTicker(e);
+                      setFilterText(e);
+                      setAlternate(!alternate);
+                    }}
+                  >
                     {e}
                   </div>
                 ))}
           </div>
         </div>
       </div>
-      <div className="app-content">
-        {!isBusy && <Chart prices={stockData.prices} />}
-        <div className="app-tracked-label">Trackers</div>
-        <div className="app-tracked"></div>
-      </div>
+      <CSSTransition
+        in={currTicker === ""}
+        timeout={1000}
+        classNames="page"
+        unmountOnExit
+      >
+        <div className={`app-content`}>
+          {!isBusy && <Chart prices={stockData.prices} />}
+          <div className="app-tracked-label">Trackers</div>
+          <div className="app-tracked"></div>
+        </div>
+      </CSSTransition>
+      <CSSTransition
+        in={!(currTicker === "") && !alternate}
+        timeout={1000}
+        classNames="page"
+        unmountOnExit
+      >
+        <div className={`app-content`}>
+          <Stock ticker={currTicker} />
+        </div>
+      </CSSTransition>
+      <CSSTransition
+        in={!(currTicker === "") && alternate}
+        timeout={1000}
+        classNames="page"
+        unmountOnExit
+      >
+        <div className={`app-content`}>
+          <Stock ticker={currTicker} />
+        </div>
+      </CSSTransition>
+      <div className="app-background" />
     </div>
   );
 };

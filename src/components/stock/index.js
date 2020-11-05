@@ -1,32 +1,62 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Chart from "../chart";
 import "./styles.scss";
-
+import configData from "../../config.json";
+import Button from "../button";
 const Stock = (props) => {
-  const data = props.data;
-  const fundamentals = data.fundamentals;
-  return (
+  const [stockData, setStockData] = useState();
+  const [isBusy, setIsBusy] = useState(true);
+  useEffect(() => {
+    if (props.ticker === "") return;
+    const fetchData = async () => {
+      fetch(configData.ENDPOINT + "/get_data/" + props.ticker, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((result) => result.json())
+        .then((data) => {
+          setStockData(data);
+          setIsBusy(false);
+        });
+    };
+    fetchData();
+  }, [props.ticker]);
+
+  return isBusy ? (
+    <div className="stock-loading">LOADING...</div>
+  ) : (
     <div className="stock">
-      <Chart prices={data.prices} />
+      <Chart prices={stockData.prices} ticker={props.ticker} />
       <div className="stock-info-box">
+        <Button className="stock-add" maxHeight={"50px"} maxWidth={"200px"}>
+          Add Ticker
+        </Button>
         <div className="stock-info">
-          <b>Ticker:</b> {data.ticker}
+          <b>Ticker:</b> {stockData.ticker}
         </div>
         <div className="stock-info">
-          <b>Name:</b> {fundamentals.company_name}
+          <b>Name:</b> {stockData.fundamentals.company_name}
         </div>
         <div className="stock-info">
-          <b>Industry:</b> {fundamentals.industry}
+          <b>Industry:</b> {stockData.fundamentals.industry}
         </div>
         <div className="stock-info">
-          <b>Sector:</b> {fundamentals.sector}
+          <b>Sector:</b> {stockData.fundamentals.sector}
         </div>
         <div className="stock-info">
-          <b>Market Cap:</b> {fundamentals.market_cap}
+          <b>Market Cap:</b> {stockData.fundamentals.market_cap}
         </div>
         <div className="stock-info">
-          <b>Description:</b> {fundamentals.description}
+          <b>Description:</b> {stockData.fundamentals.description}
         </div>
+      </div>
+      <div className="stock-info-box">
+        <div className="stock-news">News</div>
+        {stockData.news.map((e) => (
+          <div></div>
+        ))}
       </div>
     </div>
   );

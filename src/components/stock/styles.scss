@@ -1,16 +1,36 @@
 .stock {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 
-  color: peachpuff;
+  color: white;
+
+  &-loading {
+    width: 100%;
+    background: #222222;
+    color: white;
+    font-size: 100px;
+  }
 
   &-info-box {
     display: flex;
     flex-direction: column;
-    width: 40%;
+    width: 100%;
+    position: relative;
   }
 
   &-info {
     padding: 10px;
+  }
+
+  &-add {
+    position: absolute;
+    right: 20px;
+    top: 0;
+  }
+
+  &-news {
+    width: 100%;
+    padding: 10px;
+    font-size: 20px;
   }
 }

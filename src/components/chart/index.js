@@ -58,9 +58,9 @@ const Chart = (props) => {
       displayModeBar: false,
     };
 
-    Plotly.newPlot("chart", data, layout, config);
+    Plotly.newPlot("chart" + props.ticker, data, layout, config);
   });
-  return <div id="chart" />;
+  return <div id={`chart${props.ticker}`} />;
 };
 
 export default Chart;
