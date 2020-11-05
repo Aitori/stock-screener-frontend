@@ -1,5 +1,5 @@
 {
-  "homepage": "http://aitori.github.io/stock-screener-frontend",
+  "homepage": "http://aitori.github.io/Stock-Screener-Frontend",
   "name": "stock-screener-frontend",
   "version": "0.1.0",
   "private": true,
@@ -8,6 +8,7 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "node-sass": "^4.14.1",
+    "plotly.js-finance-dist": "^1.57.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.0",

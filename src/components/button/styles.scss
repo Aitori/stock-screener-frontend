@@ -1,10 +1,11 @@
 .button {
-  border: 1px black solid;
   user-select: none;
   transition: .5s;
+  color: white;
   &:hover {
     cursor: pointer;
-    transform: scale(5);
+    color: rgb(230, 0, 230);
+    transform: scale(1.2);
   }
 
   &:active {

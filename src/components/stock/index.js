@@ -3,27 +3,29 @@ import Chart from "../chart";
 import "./styles.scss";
 
 const Stock = (props) => {
+  const data = props.data;
+  const fundamentals = data.fundamentals;
   return (
     <div className="stock">
-      <Chart priceData={props.priceData} />
+      <Chart prices={data.prices} />
       <div className="stock-info-box">
         <div className="stock-info">
-          <b>Ticker:</b> {props.ticker}
+          <b>Ticker:</b> {data.ticker}
         </div>
         <div className="stock-info">
-          <b>Name:</b> {props.name}
+          <b>Name:</b> {fundamentals.company_name}
         </div>
         <div className="stock-info">
-          <b>Industry:</b> {props.industry}
+          <b>Industry:</b> {fundamentals.industry}
         </div>
         <div className="stock-info">
-          <b>Sector:</b> {props.sector}
+          <b>Sector:</b> {fundamentals.sector}
         </div>
         <div className="stock-info">
-          <b>Market Cap:</b> {props.market_cap}
+          <b>Market Cap:</b> {fundamentals.market_cap}
         </div>
         <div className="stock-info">
-          <b>Description:</b> {props.description}
+          <b>Description:</b> {fundamentals.description}
         </div>
       </div>
     </div>

@@ -1,48 +1,66 @@
-import React from "react";
-import CanvasJSReact from "../../lib/canvasjs.react";
+import React, { useEffect } from "react";
+import Plotly from "plotly.js-finance-dist";
 
 const Chart = (props) => {
-  let CanvasJSChart = CanvasJSReact.CanvasJSChart;
-  const dataPoints =
-    props.priceData == null ? [{ x: 0, y: 0 }] : props.priceData;
-  const options = {
-    theme: "dark1",
-    axisX: {
-      gridThickness: 0,
-      tickLength: 0,
-      interval: 0,
-      lineThickness: 0,
-      labelFormatter: () => {
-        return "";
+  const prices = props.prices;
+  const priceData = prices["1d"];
+  useEffect(() => {
+    function unpack(rows, key) {
+      return rows.map(function (row) {
+        return row[key];
+      });
+    }
+
+    const trace = {
+      x: unpack(priceData, "timestamp"),
+      close: unpack(priceData, "close"),
+      high: unpack(priceData, "high"),
+      low: unpack(priceData, "low"),
+      open: unpack(priceData, "open"),
+
+      increasing: { line: { color: "#62FF52" } },
+      decreasing: { line: { color: "#FF4F4F" } },
+
+      type: "candlestick",
+      xaxis: "x",
+      yaxis: "y",
+    };
+
+    const data = [trace];
+
+    const layout = {
+      margin: {
+        l: 0,
+        r: 0,
+        t: 0,
+        b: 0,
       },
-      crosshair: {
-        enabled: true,
-        color: "grey",
-        snapToDataPoint: true,
+      plot_bgcolor: "#222222",
+      dragmode: "zoom",
+      showlegend: false,
+      xaxis: {
+        showticklabels: false,
+        showgrid: false,
+        autorange: true,
+        rangeslider: {
+          visible: false
+        }
       },
-    },
-    axisY: {
-      gridThickness: 0,
-      tickLength: 0,
-      interval: 0,
-      lineThickness: 0,
-      labelFormatter: () => {
-        return "";
+      yaxis: {
+        showticklabels: false,
+        showgrid: false,
+        autorange: true,
       },
-      crosshair: {
-        enabled: true,
-        color: "grey",
-        snapToDataPoint: true,
-      },
-    },
-    data: [
-      {
-        type: "line",
-        dataPoints: dataPoints,
-      },
-    ],
-  };
-  return <CanvasJSChart options={options} />;
+    };
+
+    var config = {
+      responsive: true,
+      displayModeBar: false,
+    };
+
+    Plotly.newPlot("chart", data, layout, config);
+  });
+  return <div id="chart" />;
 };
 
 export default Chart;
