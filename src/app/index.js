@@ -18,7 +18,7 @@ const App = () => {
   const [currTicker, setCurrTicker] = useState("");
   const [alternate, setAlternate] = useState(false);
   const [trackers, setTrackers] = useState();
-
+  const [spin, setSpin] = useState(false);
   const fetchTrackers = async () => {
     fetch(configData.ENDPOINT + "/get_trackers", {
       method: "GET",
@@ -60,14 +60,14 @@ const App = () => {
           setIsBusyT(false);
         });
     };
-    
+
     fetchTrackers();
     fetchAllTickers();
     fetchData();
   }, []);
 
   return (
-    <div className="app">
+    <div className={`app${spin ? " spin" : ""}`}>
       <div className="app-nav">
         <div
           className={`app-title${currTicker === "" ? "" : " app-clickable"}`}
@@ -124,6 +124,12 @@ const App = () => {
           </div>
         </div>
       </div>
+      <div
+        style={{ position: "absolute", top: "90vh", right: "0", zIndex: "20", color: "#333333", fontSize: "5px"}}
+        onClick={() => setSpin(true)}
+      >
+        albert
+      </div>
       <CSSTransition
         in={currTicker === ""}
         timeout={1000}
@@ -143,7 +149,11 @@ const App = () => {
             ) : (
               !isBusyTrackers &&
               trackers.map((e) => (
-                <div className="app-track-item" onClick={() => setCurrTicker(e.ticker)}>
+                <div
+                  key={e.ticker}
+                  className="app-track-item"
+                  onClick={() => setCurrTicker(e.ticker)}
+                >
                   {e.ticker} | {e.close} | {e.percentage_change}
                 </div>
               ))
