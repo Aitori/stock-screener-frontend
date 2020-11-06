@@ -6,6 +6,7 @@ import Button from "../button";
 const Stock = (props) => {
   const [stockData, setStockData] = useState();
   const [isBusy, setIsBusy] = useState(true);
+  const [removed, setRemoved] = useState(false);
   useEffect(() => {
     if (props.ticker === "") return;
     const fetchData = async () => {
@@ -24,14 +25,34 @@ const Stock = (props) => {
     fetchData();
   }, [props.ticker]);
 
+  const removeTracker = () => {
+    fetch(configData.ENDPOINT + "/remove_tracker/" + props.ticker, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((result) => result.json())
+      .then(() => {
+        setRemoved(true);
+      });
+  };
+
   return isBusy ? (
     <div className="stock-loading">LOADING...</div>
   ) : (
     <div className="stock">
       <Chart prices={stockData.prices} ticker={props.ticker} />
       <div className="stock-info-box">
-        <Button className="stock-add" maxHeight={"50px"} maxWidth={"200px"}>
-          Add Ticker
+        <Button
+          className="stock-add"
+          maxHeight={"50px"}
+          maxWidth={"200px"}
+          onClick={() => {
+            if (!removed) removeTracker();
+          }}
+        >
+          {removed ? "Removed" : "Remove Ticker"}
         </Button>
         <div className="stock-info">
           <b>Ticker:</b> {stockData.ticker}

@@ -13,9 +13,26 @@ const App = () => {
   const [hoverSearch, setHoverSearch] = useState(false);
   const [isBusy, setIsBusy] = useState(true);
   const [isBusyT, setIsBusyT] = useState(true);
+  const [isBusyTrackers, setIsBusyTrackers] = useState(true);
   const [filterText, setFilterText] = useState("");
   const [currTicker, setCurrTicker] = useState("");
   const [alternate, setAlternate] = useState(false);
+  const [trackers, setTrackers] = useState();
+
+  const fetchTrackers = async () => {
+    fetch(configData.ENDPOINT + "/get_trackers", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((result) => result.json())
+      .then((data) => {
+        setTrackers(data.tracked);
+        setIsBusyTrackers(false);
+      });
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       fetch(configData.ENDPOINT + "/get_data/spy", {
@@ -39,10 +56,12 @@ const App = () => {
       })
         .then((result) => result.json())
         .then((data) => {
-          setAllTickers(data.success);
+          setAllTickers(data.tickers);
           setIsBusyT(false);
         });
     };
+    
+    fetchTrackers();
     fetchAllTickers();
     fetchData();
   }, []);
@@ -52,8 +71,10 @@ const App = () => {
       <div className="app-nav">
         <div
           className={`app-title${currTicker === "" ? "" : " app-clickable"}`}
-          onClick={() => {
+          onClick={async () => {
             if (currTicker !== "") {
+              setIsBusyTrackers(true);
+              fetchTrackers();
               setCurrTicker("");
             }
           }}
@@ -80,7 +101,10 @@ const App = () => {
               !hoverSearch ? " app-tracked-list-content-hidden" : ""
             }`}
           >
-            {!isBusyT &&
+            {isBusyT ? (
+              <div className="app-loading">Loading...</div>
+            ) : (
+              !isBusyT &&
               allTickers
                 .filter((s) => s.includes(filterText))
                 .map((e) => (
@@ -89,13 +113,14 @@ const App = () => {
                     className="app-tracked-list-content"
                     onClick={() => {
                       setCurrTicker(e);
-                      setFilterText(e);
+                      setFilterText("");
                       setAlternate(!alternate);
                     }}
                   >
                     {e}
                   </div>
-                ))}
+                ))
+            )}
           </div>
         </div>
       </div>
@@ -106,9 +131,24 @@ const App = () => {
         unmountOnExit
       >
         <div className={`app-content`}>
-          {!isBusy && <Chart prices={stockData.prices} />}
+          {isBusy ? (
+            <div className="app-loading">Loading...</div>
+          ) : (
+            <Chart prices={stockData.prices} />
+          )}
           <div className="app-tracked-label">Trackers</div>
-          <div className="app-tracked"></div>
+          <div className="app-tracked">
+            {isBusyTrackers ? (
+              <div className="app-loading">Loading...</div>
+            ) : (
+              !isBusyTrackers &&
+              trackers.map((e) => (
+                <div className="app-track-item" onClick={() => setCurrTicker(e.ticker)}>
+                  {e.ticker} | {e.close} | {e.percentage_change}
+                </div>
+              ))
+            )}
+          </div>
         </div>
       </CSSTransition>
       <CSSTransition

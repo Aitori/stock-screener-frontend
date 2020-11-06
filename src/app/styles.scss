@@ -10,6 +10,7 @@
   font-family: "Inter";
 
   &-nav {
+    height: 30px;
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
     margin: 0 0 10px 0;
@@ -17,6 +18,8 @@
     @media screen and (max-width: 420px) {
       grid-template-columns: 1fr 40px 1fr;
     }
+
+    align-items: center;
     z-index: 10;
   }
 
@@ -24,7 +27,7 @@
     margin: 0 auto 0 0;
     min-width: 0;
     color: white;
-    font-size: calc(10px + .75vw);
+    font-size: calc(10px + 0.75vw);
   }
 
   &-tilt {
@@ -46,7 +49,7 @@
     color: white;
     padding: 0;
     border: none;
-    font-size: calc(10px + .75vw);
+    font-size: calc(10px + 0.75vw);
 
     &:focus {
       outline: none;
@@ -54,7 +57,7 @@
   }
 
   &-clickable {
-    transition: .2s;
+    transition: 0.2s;
     &:hover {
       cursor: pointer;
       background: #333333dd;
@@ -67,12 +70,17 @@
   }
 
   &-content {
-    width: 100%;
+    width: calc(100% - 40px);
     visibility: visible;
     opacity: 1;
 
     transition: opacity 0.2s, visibility 0.2s;
     z-index: 9;
+
+    position: absolute;
+    
+    top: 60px;
+    left: 20px;
   }
 
   &-tracked-label {
@@ -80,12 +88,14 @@
     font-size: 20px;
     display: flex;
     justify-content: center;
+    margin: 0 0 20px 0;
   }
 
   &-tracked {
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
   }
 
   &-tracked-list {
@@ -97,7 +107,7 @@
     left: 0;
     z-index: 10;
     margin: 5px 0 0 0;
-    transition: opacity .2s, visibility .2s;
+    transition: opacity 0.2s, visibility 0.2s;
     max-height: 300px;
     overflow-y: scroll;
   }
@@ -107,7 +117,7 @@
     padding: 2px 0;
     color: white;
     background: #222222dd;
-    transition: .2s;
+    transition: 0.2s;
     &:hover {
       cursor: pointer;
       background: #333333dd;
@@ -123,22 +133,21 @@
   .page-enter {
     opacity: 0;
   }
-  
+
   .page-enter-active {
     opacity: 1;
     transition: opacity 500ms;
   }
-  
+
   .page-exit {
     opacity: 1;
   }
-  
+
   .page-exit-active {
     opacity: 0;
     transition: opacity 500ms;
   }
 
-  
   &-background {
     z-index: 0;
     position: fixed;
@@ -147,5 +156,30 @@
     background: #222222;
     top: 0px;
     left: 0px;
+  }
+
+  &-loading {
+    color: white;
+    font-size: 40px;
+    animation: spin 3s infinite linear;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  &-track-item {
+    color: white;
+    margin: 10px 0;
+    &:hover {
+      cursor: pointer;
+      background: #333333dd;
+      color: rgb(230, 0, 230);
+    }
   }
 }

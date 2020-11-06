@@ -1,9 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Plotly from "plotly.js-finance-dist";
+import "./styles.scss";
+
+const timeInts = ["1d", "5d", "1m", "3m", "6m", "1y"];
 
 const Chart = (props) => {
+  const [selected, setSelected] = useState("1d");
   const prices = props.prices;
-  const priceData = prices["1d"];
+  const priceData = prices[selected];
   useEffect(() => {
     function unpack(rows, key) {
       return rows.map(function (row) {
@@ -43,8 +47,8 @@ const Chart = (props) => {
         showgrid: false,
         autorange: true,
         rangeslider: {
-          visible: false
-        }
+          visible: false,
+        },
       },
       yaxis: {
         showticklabels: false,
@@ -60,7 +64,22 @@ const Chart = (props) => {
 
     Plotly.newPlot("chart" + props.ticker, data, layout, config);
   });
-  return <div id={`chart${props.ticker}`} />;
+  return (
+    <div className="chart">
+      <div id={`chart${props.ticker}`} />
+      <div className="chart-buttons">
+        {timeInts.map((e) => (
+          <div
+            key={e}
+            className={`chart-button${selected === e ? " chart-selected" : ""}`}
+            onClick={() => setSelected(e)}
+          >
+            {e}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default Chart;

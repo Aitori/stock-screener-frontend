@@ -6,6 +6,7 @@ const Button = (props) => {
     <div
       className={`${props.className} button`}
       style={{ maxHeight: props.maxHeight, maxWidth: props.maxWidth }}
+      onClick={props.onClick}
     >
       {props.children}
     </div>
