@@ -76,7 +76,13 @@ const Stock = (props) => {
       <div className="stock-info-box">
         <div className="stock-news">News</div>
         {stockData.news.map((e) => (
-          <div></div>
+          <div>{e.url}</div>
+        ))}
+      </div>
+      <div className="stock-info-box">
+        <div className="stock-news">Tweets</div>
+        {stockData.tweets.map((e) => (
+          <div>{e.url}</div>
         ))}
       </div>
     </div>
