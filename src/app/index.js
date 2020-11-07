@@ -284,7 +284,7 @@ const App = () => {
                 gradeToggle &&
                 gradeDay.map((e) => (
                   <div key={e.grade} className="app-correlation-item">
-                    <div className="app-correlation-sector">{e.grade}</div>
+                    <div className="app-correlation-sector">Grade: {e.grade}</div>
                     <div className="app-correlation-percentage">
                       Mean:
                       {(parseFloat(e.mean_percent_change) * 100).toFixed(1)}%
