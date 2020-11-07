@@ -77,24 +77,40 @@
     z-index: 9;
 
     position: absolute;
-    
+
     top: 60px;
     left: 20px;
   }
 
   &-tracked-label {
     color: white;
-    font-size: 20px;
+    font-size: 24px;
     display: flex;
     justify-content: center;
-    margin: 0 0 20px 0;
+    margin: 20px 0;
   }
 
   &-tracked {
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     justify-items: center;
+
+    @media (max-width: 1400px) {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+    @media (max-width: 1000px) {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    @media (max-width: 690px) {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @media (max-width: 420px) {
+      grid-template-columns: 1fr;
+    }
   }
 
   &-tracked-list {
@@ -122,6 +138,11 @@
       background: #333333dd;
       color: rgb(230, 0, 230);
     }
+  }
+
+  &-tracked-list-content-wrapper {
+    display: flex;
+    flex-direction: row;
   }
 
   &-tracked-list-content-hidden {
@@ -163,13 +184,52 @@
     animation: spin 3s infinite linear;
   }
 
-  &-track-item {
+  &-correlation {
+    display: flex;
+    flex-direction: row;
     color: white;
-    margin: 10px 0;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  &-correlation-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: white .5px solid;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  &-correlation-sector {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  &-correlation-percentage {
+    margin: 10px 0 0 0;
+    font-size: 30px;
+    text-align: center;
+  }
+
+  &-toggle-button {
+    width: 120px;
+    border: white .5px solid;
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
+    user-select: none;
     &:hover {
       cursor: pointer;
-      background: #333333dd;
-      color: rgb(230, 0, 230);
+      color: purple;
+    }
+    &:active {
+      color: blue;
     }
   }
 }

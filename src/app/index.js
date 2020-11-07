@@ -6,6 +6,7 @@ import configData from "../config.json";
 import Chart from "../components/chart";
 import Stock from "../components/stock";
 import { CSSTransition } from "react-transition-group";
+import TrackerCard from "../components/tracker_card";
 
 const App = () => {
   const [stockData, setStockData] = useState();
@@ -14,11 +15,25 @@ const App = () => {
   const [isBusy, setIsBusy] = useState(true);
   const [isBusyT, setIsBusyT] = useState(true);
   const [isBusyTrackers, setIsBusyTrackers] = useState(true);
+  const [isBusyCorrelationsDay, setIsBusyCorrelationsDay] = useState(true);
+  const [isBusyCorrelationsMinute, setIsBusyCorrelationsMinute] = useState(
+    true
+  );
+  const [isBusyGradeDay, setIsBusyGradeDay] = useState(true);
+  const [isBusyGradeMinute, setIsBusyGradeMinute] = useState(
+    true
+  );
   const [filterText, setFilterText] = useState("");
   const [currTicker, setCurrTicker] = useState("");
   const [alternate, setAlternate] = useState(false);
   const [trackers, setTrackers] = useState();
   const [spin, setSpin] = useState(false);
+  const [correlationsDay, setCorrelationsDay] = useState();
+  const [correlationsMinute, setCorrelationsMinute] = useState();
+  const [correlationsToggle, setCorrelationsToggle] = useState();
+  const [gradeDay, setGradeDay] = useState();
+  const [gradeMinute, setGradeMinute] = useState();
+  const [gradeToggle, setGradeToggle] = useState();
   const fetchTrackers = async () => {
     fetch(configData.ENDPOINT + "/get_trackers", {
       method: "GET",
@@ -30,6 +45,70 @@ const App = () => {
       .then((data) => {
         setTrackers(data.tracked);
         setIsBusyTrackers(false);
+      });
+  };
+
+  const fetchCorrelation = async () => {
+    fetch(configData.ENDPOINT + "/get_correlations/day", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((result) => result.json())
+      .then((data) => {
+        setCorrelationsDay(data.success);
+        setIsBusyCorrelationsDay(false);
+      });
+    fetch(configData.ENDPOINT + "/get_correlations/minute", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((result) => result.json())
+      .then((data) => {
+        setCorrelationsMinute(data.success);
+        setIsBusyCorrelationsMinute(false);
+      });
+  };
+
+  const fetchGrade = async () => {
+    fetch(configData.ENDPOINT + "/get_market_cap_grade_percent_change/day", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((result) => result.json())
+      .then((data) => {
+        setGradeDay(data.success);
+        setIsBusyGradeDay(false);
+      });
+    fetch(configData.ENDPOINT + "/get_market_cap_grade_percent_change/minute", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((result) => result.json())
+      .then((data) => {
+        setGradeMinute(data.success);
+        setIsBusyGradeMinute(false);
+      });
+  };
+
+  const addTracker = async (ticker) => {
+    fetch(configData.ENDPOINT + "/add_tracker/" + ticker, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((result) => result.json())
+      .then(() => {
+        console.log("OP");
+        fetchTrackers();
       });
   };
 
@@ -60,10 +139,11 @@ const App = () => {
           setIsBusyT(false);
         });
     };
-
+    fetchCorrelation();
     fetchTrackers();
     fetchAllTickers();
     fetchData();
+    fetchGrade();
   }, []);
 
   return (
@@ -108,16 +188,26 @@ const App = () => {
               allTickers
                 .filter((s) => s.includes(filterText))
                 .map((e) => (
-                  <div
-                    key={e}
-                    className="app-tracked-list-content"
-                    onClick={() => {
-                      setCurrTicker(e);
-                      setFilterText("");
-                      setAlternate(!alternate);
-                    }}
-                  >
-                    {e}
+                  <div key={e} className="app-tracked-list-content-wrapper">
+                    <div
+                      className="app-tracked-list-content"
+                      onClick={() => {
+                        setCurrTicker(e);
+                        setFilterText("");
+                        setAlternate(!alternate);
+                      }}
+                    >
+                      {e}
+                    </div>
+                    <div
+                      className="app-tracked-list-content"
+                      onClick={() => {
+                        addTracker(e);
+                        setFilterText("");
+                      }}
+                    >
+                      +
+                    </div>
                   </div>
                 ))
             )}
@@ -125,7 +215,14 @@ const App = () => {
         </div>
       </div>
       <div
-        style={{ position: "absolute", top: "90vh", right: "0", zIndex: "20", color: "#333333", fontSize: "5px"}}
+        style={{
+          position: "absolute",
+          top: "90vh",
+          right: "0",
+          zIndex: "20",
+          color: "#333333",
+          fontSize: "5px",
+        }}
         onClick={() => setSpin(true)}
       >
         albert
@@ -137,6 +234,84 @@ const App = () => {
         unmountOnExit
       >
         <div className={`app-content`}>
+          {isBusyCorrelationsDay && isBusyCorrelationsMinute ? (
+            <div className="app-loading">Loading...</div>
+          ) : (
+            <div className="app-correlation">
+              <div
+                className="app-toggle-button"
+                onClick={() => {
+                  setCorrelationsToggle(!correlationsToggle);
+                }}
+              >
+                {!correlationsToggle ? "Minute Correlation" : "Day Correlation"}
+              </div>
+              {!isBusyCorrelationsDay &&
+                correlationsToggle &&
+                correlationsDay.map((e) => (
+                  <div key={e.sector} className="app-correlation-item">
+                    <div className="app-correlation-sector">{e.sector}</div>
+                    <div className="app-correlation-percentage">
+                      {(parseFloat(e.correlation) * 100).toFixed(1)}%
+                    </div>
+                  </div>
+                ))}
+              {!isBusyCorrelationsMinute &&
+                !correlationsToggle &&
+                correlationsMinute.map((e) => (
+                  <div key={e.sector} className="app-correlation-item">
+                    <div className="app-correlation-sector">{e.sector}</div>
+                    <div className="app-correlation-percentage">
+                      {(parseFloat(e.correlation) * 100).toFixed(1)}%
+                    </div>
+                  </div>
+                ))}
+            </div>
+          )}
+          {isBusyGradeDay && isBusyGradeMinute ? (
+            <div className="app-loading">Loading...</div>
+          ) : (
+            <div className="app-correlation">
+              <div
+                className="app-toggle-button"
+                onClick={() => {
+                  setGradeToggle(!gradeToggle);
+                }}
+              >
+                {!gradeToggle ? "Minute Market Cap Grade" : "Day Market Cap Grade"}
+              </div>
+              {!isBusyGradeDay &&
+                gradeToggle &&
+                gradeDay.map((e) => (
+                  <div key={e.grade} className="app-correlation-item">
+                    <div className="app-correlation-sector">{e.grade}</div>
+                    <div className="app-correlation-percentage">
+                      Mean:
+                      {(parseFloat(e.mean_percent_change) * 100).toFixed(1)}%
+                    </div>
+                    <div className="app-correlation-percentage">
+                      STDV: 
+                      {(parseFloat(e.std_dev_percent_change) * 100).toFixed(1)}%
+                    </div>
+                  </div>
+                ))}
+              {!isBusyGradeMinute &&
+                !gradeToggle &&
+                gradeMinute.map((e) => (
+                  <div key={e.grade} className="app-correlation-item">
+                    <div className="app-correlation-sector">{e.grade}</div>
+                    <div className="app-correlation-percentage">
+                      Mean:
+                      {(parseFloat(e.mean_percent_change) * 100).toFixed(1)}%
+                    </div>
+                    <div className="app-correlation-percentage">
+                      STDV:
+                      {(parseFloat(e.std_dev_percent_change) * 100).toFixed(1)}%
+                    </div>
+                  </div>
+                ))}
+            </div>
+          )}
           {isBusy ? (
             <div className="app-loading">Loading...</div>
           ) : (
@@ -149,13 +324,11 @@ const App = () => {
             ) : (
               !isBusyTrackers &&
               trackers.map((e) => (
-                <div
+                <TrackerCard
                   key={e.ticker}
-                  className="app-track-item"
                   onClick={() => setCurrTicker(e.ticker)}
-                >
-                  {e.ticker} | {e.close} | {e.percentage_change}
-                </div>
+                  {...e}
+                />
               ))
             )}
           </div>
