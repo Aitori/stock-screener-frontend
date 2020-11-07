@@ -20,9 +20,7 @@ const App = () => {
     true
   );
   const [isBusyGradeDay, setIsBusyGradeDay] = useState(true);
-  const [isBusyGradeMinute, setIsBusyGradeMinute] = useState(
-    true
-  );
+  const [isBusyGradeMinute, setIsBusyGradeMinute] = useState(true);
   const [filterText, setFilterText] = useState("");
   const [currTicker, setCurrTicker] = useState("");
   const [alternate, setAlternate] = useState(false);
@@ -278,20 +276,24 @@ const App = () => {
                   setGradeToggle(!gradeToggle);
                 }}
               >
-                {!gradeToggle ? "Minute Market Cap Grade" : "Day Market Cap Grade"}
+                {!gradeToggle
+                  ? "Minute Market Cap Grade"
+                  : "Day Market Cap Grade"}
               </div>
               {!isBusyGradeDay &&
                 gradeToggle &&
                 gradeDay.map((e) => (
                   <div key={e.grade} className="app-correlation-item">
-                    <div className="app-correlation-sector">Grade: {e.grade}</div>
-                    <div className="app-correlation-percentage">
-                      Mean:
-                      {(parseFloat(e.mean_percent_change) * 100).toFixed(1)}%
+                    <div className="app-correlation-sector">
+                      Grade: {e.grade}
                     </div>
                     <div className="app-correlation-percentage">
-                      STDV: 
-                      {(parseFloat(e.std_dev_percent_change) * 100).toFixed(1)}%
+                      Mean:
+                      {parseFloat(e.mean_percent_change).toFixed(1)}%
+                    </div>
+                    <div className="app-correlation-percentage">
+                      STDV:
+                      {parseFloat(e.std_dev_percent_change).toFixed(1)}%
                     </div>
                   </div>
                 ))}
@@ -299,14 +301,16 @@ const App = () => {
                 !gradeToggle &&
                 gradeMinute.map((e) => (
                   <div key={e.grade} className="app-correlation-item">
-                    <div className="app-correlation-sector">{e.grade}</div>
+                    <div className="app-correlation-sector">
+                      Grade:{e.grade}
+                    </div>
                     <div className="app-correlation-percentage">
                       Mean:
-                      {(parseFloat(e.mean_percent_change) * 100).toFixed(1)}%
+                      {(parseFloat(e.mean_percent_change) * 100).toFixed(1)}‱
                     </div>
                     <div className="app-correlation-percentage">
                       STDV:
-                      {(parseFloat(e.std_dev_percent_change) * 100).toFixed(1)}%
+                      {(parseFloat(e.std_dev_percent_change) * 100).toFixed(1)}‱
                     </div>
                   </div>
                 ))}
