@@ -26,6 +26,7 @@ const App = () => {
   const [alternate, setAlternate] = useState(false);
   const [trackers, setTrackers] = useState();
   const [spin, setSpin] = useState(false);
+  const [avi, setAvi] = useState(false);
   const [correlationsDay, setCorrelationsDay] = useState();
   const [correlationsMinute, setCorrelationsMinute] = useState();
   const [correlationsToggle, setCorrelationsToggle] = useState();
@@ -225,6 +226,19 @@ const App = () => {
       >
         albert
       </div>
+      <div
+        style={{
+          position: "absolute",
+          top: "10vh",
+          left: "0",
+          zIndex: "20",
+          color: "#333333",
+          fontSize: "5px",
+        }}
+        onClick={() => setAvi(true)}
+      >
+        avi:)
+      </div>
       <CSSTransition
         in={currTicker === ""}
         timeout={1000}
@@ -345,7 +359,7 @@ const App = () => {
         unmountOnExit
       >
         <div className={`app-content`}>
-          <Stock ticker={currTicker} />
+          <Stock ticker={currTicker} avi={avi}/>
         </div>
       </CSSTransition>
       <CSSTransition
@@ -355,7 +369,7 @@ const App = () => {
         unmountOnExit
       >
         <div className={`app-content`}>
-          <Stock ticker={currTicker} />
+          <Stock ticker={currTicker} avi={avi}/>
         </div>
       </CSSTransition>
       <div className="app-background" />

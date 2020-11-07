@@ -7,6 +7,7 @@ const Stock = (props) => {
   const [stockData, setStockData] = useState();
   const [isBusy, setIsBusy] = useState(true);
   const [removed, setRemoved] = useState(false);
+  const avi = props.avi || false
   useEffect(() => {
     if (props.ticker === "") return;
     const fetchData = async () => {
@@ -76,13 +77,21 @@ const Stock = (props) => {
       <div className="stock-info-box">
         <div className="stock-news">News</div>
         {stockData.news.map((e, i) => (
-          <div key={i}><a href={e.url}>{e.url}</a></div>
+          <div key={i}>
+            <a href={e.url} className="stock-a" target="_blank" rel="noreferrer">
+              {e.url}
+            </a>
+          </div>
         ))}
       </div>
       <div className="stock-info-box">
         <div className="stock-news">Tweets</div>
         {stockData.tweets.map((e, i) => (
-          <div key={i}><a href={e.url}>{e.url}</a></div>
+          <div key={i} style={{transform: `rotate(${avi ? Math.random() * 30 - 15 : 0}deg)`}}>
+            <a href={e.url} className="stock-a" target="_blank" rel="noreferrer">
+              {e.url}
+            </a>
+          </div>
         ))}
       </div>
     </div>

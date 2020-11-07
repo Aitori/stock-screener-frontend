@@ -42,8 +42,14 @@ const TrackerCard = (props) => {
       <textarea
         className={`tracker-card-input${flash ? " tracker-card-border" : ""}`}
         placeholder="Notes"
-        onChange={(e) => setNotes(e.target.value)}
-        value={notes}
+        onChange={(e) => {
+          if (e.target.value == null) {
+            setNotes("");
+          } else {
+            setNotes(e.target.value);
+          }
+        }}
+        value={notes ? notes : ""}
         onBlur={() => updateNotes(notes)}
       />
       <div className="tracker-card-click" onClick={props.onClick} />
