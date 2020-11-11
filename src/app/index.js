@@ -10,16 +10,9 @@ import TrackerCard from "../components/tracker_card";
 
 const App = () => {
   // all other state data
-  const [stockData, setStockData] = useState();
-  const [allTickers, setAllTickers] = useState();
   const [hoverSearch, setHoverSearch] = useState(false);
   const [filterText, setFilterText] = useState("");
   const [currTicker, setCurrTicker] = useState("");
-  const [alternate, setAlternate] = useState(false);
-  const [trackers, setTrackers] = useState();
-  // troll data
-  const [spin, setSpin] = useState(false);
-  const [avi, setAvi] = useState(false);
   // correlation and grade data
   const [correlationsDay, setCorrelationsDay] = useState();
   const [correlationsMinute, setCorrelationsMinute] = useState();
@@ -28,29 +21,14 @@ const App = () => {
   const [gradeMinute, setGradeMinute] = useState();
   const [gradeToggle, setGradeToggle] = useState();
   // is busy states
-  const [isBusy, setIsBusy] = useState(true);
-  const [isBusyT, setIsBusyT] = useState(true);
-  const [isBusyTrackers, setIsBusyTrackers] = useState(true);
+  
+  
   const [isBusyCorrelationsDay, setIsBusyCorrelationsDay] = useState(true);
   const [isBusyCorrelationsMinute, setIsBusyCorrelationsMinute] = useState(
     true
   );
   const [isBusyGradeDay, setIsBusyGradeDay] = useState(true);
   const [isBusyGradeMinute, setIsBusyGradeMinute] = useState(true);
-
-  const fetchTrackers = async () => {
-    fetch(configData.ENDPOINT + "/get_trackers", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((result) => result.json())
-      .then((data) => {
-        setTrackers(data.tracked);
-        setIsBusyTrackers(false);
-      });
-  };
 
   const fetchCorrelation = async () => {
     fetch(configData.ENDPOINT + "/get_correlations/day", {
@@ -102,34 +80,6 @@ const App = () => {
       });
   };
 
-  const addTracker = async (ticker) => {
-    fetch(configData.ENDPOINT + "/add_tracker/" + ticker, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((result) => result.json())
-      .then(() => {
-        console.log("OP");
-        fetchTrackers();
-      });
-  };
-
-  const fetchData = async () => {
-    fetch(configData.ENDPOINT + "/get_data/spy", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((result) => result.json())
-      .then((data) => {
-        setStockData(data);
-        setIsBusy(false);
-      });
-  };
-
   const fetchAllTickers = async () => {
     fetch(configData.ENDPOINT + "/get_all_tickers", {
       method: "GET",
@@ -146,7 +96,6 @@ const App = () => {
 
   useEffect(() => {
     fetchCorrelation();
-    fetchTrackers();
     fetchAllTickers();
     fetchData();
     fetchGrade();
