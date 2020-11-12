@@ -1,32 +1,19 @@
 import React, { useEffect, useState } from "react";
-import './styles.scss';
+import "./styles.scss";
 import configData from "../../config.json";
+
+import Chart from '../chart';
+import TrackerCard from '../tracker_card';
 
 // component for front page of site
 const FrontPage = () => {
-  // functional states
-  const [correlationsDay, setCorrelationsDay] = useState();
-  const [correlationsMinute, setCorrelationsMinute] = useState();
-  const [correlationsToggle, setCorrelationsToggle] = useState();
-  const [gradeDay, setGradeDay] = useState();
-  const [gradeMinute, setGradeMinute] = useState();
-  const [gradeToggle, setGradeToggle] = useState();
-  const [isBusyCorrelationsDay, setIsBusyCorrelationsDay] = useState(true);
-  const [isBusyCorrelationsMinute, setIsBusyCorrelationsMinute] = useState(
-    true
-  );
-  const [isBusyGradeDay, setIsBusyGradeDay] = useState(true);
-  const [isBusyGradeMinute, setIsBusyGradeMinute] = useState(true);
-  
   // data states
-  const [spyData, setSpyData] = useState();       // spy data graph
-  const [trackers, setTrackers] = useState();     // list of trackers
-  const [allTickers, setAllTickers] = useState(); // list of tickers
+  const [spyData, setSpyData] = useState(); // spy data graph
+  const [trackers, setTrackers] = useState(); // list of trackers
 
-  // isBusy states
+  // is busy states
   const [isSpyBusy, setIsSpyBusy] = useState(true);
   const [isBusyTrackers, setIsBusyTrackers] = useState(true);
-  const [isBusyTickers, setIsBusyTickers] = useState(true);
 
   // fetch call functions
   const fetchTrackers = async () => {
@@ -55,4 +42,35 @@ const FrontPage = () => {
         setIsSpyBusy(false);
       });
   };
-}
+
+  useEffect(() => {
+    fetchSpyData();
+    fetchTrackers();
+  }, []);
+
+  return (
+    <div className="front-page">
+      {isSpyBusy ? (
+        <div className="front-page-loading">Loading...</div>
+      ) : (
+        <Chart prices={spyData.prices} />
+      )}
+      <div className="front-page-tracked-label">Trackers</div>
+      <div className="front-page-tracked">
+        {isBusyTrackers ? (
+          <div className="front-page-loading">Loading...</div>
+        ) : (
+          !isBusyTrackers &&
+          trackers.map((e) => (
+            <TrackerCard
+              key={e.ticker}
+              {...e}
+            />
+          ))
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default FrontPage;
