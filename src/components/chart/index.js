@@ -66,7 +66,9 @@ const Chart = (props) => {
   });
   return (
     <div className="chart">
-      <div id={`chart${props.ticker}`} />
+      <div className="chart-chart">
+        <div id={`chart${props.ticker}`} />
+      </div>
       <div className="chart-buttons">
         {timeInts.map((e) => (
           <div

@@ -159,3 +159,5 @@ const GradeCorrelationChart = () => {
     </div>
   );
 };
+
+export default GradeCorrelationChart;

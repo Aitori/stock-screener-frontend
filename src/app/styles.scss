@@ -1,27 +1,14 @@
 .app {
   display: flex;
   flex-direction: column;
-  position: relative;
 
-  padding: 20px;
+  position: relative;
 
   background: #222222;
 
   font-family: "Inter";
 
-  &-content {
-    width: calc(100% - 40px);
-    visibility: visible;
-    opacity: 1;
-
-    transition: opacity 0.2s, visibility 0.2s;
-    z-index: 9;
-
-    position: absolute;
-
-    top: 60px;
-    left: 20px;
-  }
+  padding: 10px;
 
   &-background {
     z-index: 0;
@@ -32,8 +19,17 @@
     top: 0px;
     left: 0px;
   }
+
+  &-navbar {
+    z-index: 10;
+  }
+
+  &-content {
+    z-index: 5;
+  }
 }
 
+// page transitions
 .page-enter {
   opacity: 0;
 }

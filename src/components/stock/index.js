@@ -3,14 +3,16 @@ import Chart from "../chart";
 import "./styles.scss";
 import configData from "../../config.json";
 import Button from "../button";
+import { useParams } from "react-router-dom";
 const Stock = (props) => {
   const [stockData, setStockData] = useState();
   const [isBusy, setIsBusy] = useState(true);
   const [removed, setRemoved] = useState(false);
+  const { ticker } = useParams();
   useEffect(() => {
-    if (props.ticker === "") return;
+    if (ticker === "") return;
     const fetchData = async () => {
-      fetch(configData.ENDPOINT + "/get_data/" + props.ticker, {
+      fetch(configData.ENDPOINT + "/get_data/" + ticker, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -23,10 +25,10 @@ const Stock = (props) => {
         });
     };
     fetchData();
-  }, [props.ticker]);
+  }, [ticker]);
 
   const removeTracker = () => {
-    fetch(configData.ENDPOINT + "/remove_tracker/" + props.ticker, {
+    fetch(configData.ENDPOINT + "/remove_tracker/" + ticker, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -42,7 +44,7 @@ const Stock = (props) => {
     <div className="stock-loading">LOADING...</div>
   ) : (
     <div className="stock">
-      <Chart prices={stockData.prices} ticker={props.ticker} />
+      <Chart prices={stockData.prices} ticker={ticker} />
       <div className="stock-info-box">
         <Button
           className="stock-add"

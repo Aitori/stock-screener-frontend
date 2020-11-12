@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./styles.scss";
 import configData from "../../config.json";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const NavBar = (props) => {
-  // retrieve current ticker from URL
-  const { currentTicker } = useParams();
+const NavBar = () => {
   // list of tickers state data for drop down menu
   const [allTickers, setAllTickers] = useState();
   // busy state for calling API to avoid null allTickers object
@@ -36,20 +34,11 @@ const NavBar = (props) => {
   }, []);
 
   return (
-    <div className="navbar-nav">
-      <Link to="/">
-        <div
-          className={`navbar-title${
-            currentTicker === "" ? "" : " navbar-clickable"
-          }`}
-        >
-          {currentTicker === "" ? "Stock Screener" : "Back"}
-        </div>
+    <div className="navbar">
+      <Link to="/" className="navbar-title">
+        Stock Screener
       </Link>
-      <div className="navbar-title navbar-end">
-        {currentTicker === "" ? "" : currentTicker}
-      </div>
-      <div className="navbar-tilt">
+      <div className="navbar-search-position">
         <input
           value={filterText}
           className="navbar-search"
@@ -73,16 +62,16 @@ const NavBar = (props) => {
             allTickers
               .filter((s) => s.includes(filterText))
               .map((e) => (
-                <div key={e} className="navbar-tracked-list-content-wrnavbarer">
-                  <div
-                    className="navbar-tracked-list-content"
-                    onClick={() => {
-                      setFilterText("");
-                    }}
-                  >
-                    {e}
-                  </div>
-                </div>
+                <Link
+                  key={e}
+                  to={`/${e}`}
+                  className="navbar-tracked-item"
+                  onClick={() => {
+                    setFilterText("");
+                  }}
+                >
+                  {e}
+                </Link>
               ))
           )}
         </div>

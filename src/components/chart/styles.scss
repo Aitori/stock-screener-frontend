@@ -1,30 +1,47 @@
 .chart {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 
   &-buttons {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
+
+    width: 5%;
+    min-width: 40px;
+    padding: 0 0 0 20px;
   }
 
   &-button {
     user-select: none;
+
     transition: 0.5s;
+
     color: white;
     border: 1px white solid;
     border-radius: 10px;
+
     padding: 5px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     &:hover {
       cursor: pointer;
       color: rgb(230, 0, 230);
-      border: 50px rgb(230, 0, 230) solid;
-      transform: scale(1.2);
+      border: 1px rgb(230, 0, 230) solid;
     }
+  }
 
-    &:active {
-      transform: scale(1.1);
-    }
+  &-chart {
+    width: 90%;
+
+    padding: 20px;
+
+    border-radius: 20px;
+
+    border: 1px solid white;
   }
 
   &-selected {
