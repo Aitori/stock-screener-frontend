@@ -4,12 +4,13 @@ import "./styles.scss";
 import configData from "../../config.json";
 import Button from "../button";
 import { useParams } from "react-router-dom";
-const Stock = (props) => {
+const Stock = React.forwardRef((props, ref) => {
   const [stockData, setStockData] = useState();
   const [isBusy, setIsBusy] = useState(true);
   const [removed, setRemoved] = useState(false);
   const { ticker } = useParams();
   useEffect(() => {
+    let mounted = true;
     if (ticker === "") return;
     const fetchData = async () => {
       fetch(configData.ENDPOINT + "/get_data/" + ticker, {
@@ -20,11 +21,14 @@ const Stock = (props) => {
       })
         .then((result) => result.json())
         .then((data) => {
-          setStockData(data);
-          setIsBusy(false);
+          if (mounted) {
+            setStockData(data);
+            setIsBusy(false);
+          }
         });
     };
     fetchData();
+    return () => (mounted = false);
   }, [ticker]);
 
   const removeTracker = () => {
@@ -41,9 +45,11 @@ const Stock = (props) => {
   };
 
   return isBusy ? (
-    <div className="stock-loading">LOADING...</div>
+    <div className="stock-loading" ref={ref}>
+      LOADING...
+    </div>
   ) : (
-    <div className="stock">
+    <div className="stock" ref={ref}>
       <Chart prices={stockData.prices} ticker={ticker} />
       <div className="stock-info-box">
         <Button
@@ -107,6 +113,6 @@ const Stock = (props) => {
       </div>
     </div>
   );
-};
+});
 
 export default Stock;

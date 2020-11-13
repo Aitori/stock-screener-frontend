@@ -1,4 +1,8 @@
 .front-page {
+  width: calc(100% - 20px);
+
+  margin: 10px;
+
   &-tracked-label {
     color: white;
     font-size: 24px;

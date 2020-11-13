@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import "./styles.scss";
 import configData from "../../config.json";
 
-import Chart from '../chart';
-import TrackerCard from '../tracker_card';
+import Chart from "../chart";
+import TrackerCard from "../tracker_card";
 
 // component for front page of site
-const FrontPage = () => {
+const FrontPage = React.forwardRef((props, ref) => {
   // data states
   const [spyData, setSpyData] = useState(); // spy data graph
   const [trackers, setTrackers] = useState(); // list of trackers
@@ -49,7 +49,7 @@ const FrontPage = () => {
   }, []);
 
   return (
-    <div className="front-page">
+    <div className="front-page" ref={ref}>
       {isSpyBusy ? (
         <div className="front-page-loading">Loading...</div>
       ) : (
@@ -61,16 +61,11 @@ const FrontPage = () => {
           <div className="front-page-loading">Loading...</div>
         ) : (
           !isBusyTrackers &&
-          trackers.map((e) => (
-            <TrackerCard
-              key={e.ticker}
-              {...e}
-            />
-          ))
+          trackers.map((e) => <TrackerCard key={e.ticker} {...e} />)
         )}
       </div>
     </div>
   );
-};
+});
 
 export default FrontPage;
