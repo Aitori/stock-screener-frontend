@@ -8,11 +8,6 @@
   &:hover {
     cursor: pointer;
     color: rgb(230, 0, 230);
-    border: 50px rgb(230, 0, 230) solid;
-    transform: scale(1.2);
-  }
-
-  &:active {
-    transform: scale(1.1);
+    border: 1px rgb(230, 0, 230) solid;
   }
 }

@@ -4,7 +4,7 @@ import configData from "../../config.json";
 
 const TrackerCard = (props) => {
   const [notes, setNotes] = useState("");
-  const percentage_change = parseFloat(props.percentage_change).toFixed(3);
+  const percentage_change = parseFloat(props.percentage_change).toFixed(2);
   const [flash, setFlash] = useState(false);
 
   useEffect(() => setNotes(props.notes), [props.notes]);
@@ -22,6 +22,7 @@ const TrackerCard = (props) => {
     setFlash(true);
     setTimeout(() => setFlash(false), 200);
   };
+
   return (
     <div
       className="tracker-card"
@@ -53,6 +54,10 @@ const TrackerCard = (props) => {
         onBlur={() => updateNotes(notes)}
       />
       <div className="tracker-card-click" onClick={props.onClick} />
+      <div className="tracker-card-wrapper">
+        <div className="tracker-card-small-text">Open: {` $${props.open}`}</div>
+        <div className="tracker-card-small-text">{props.timestamp}</div>
+      </div>
     </div>
   );
 };

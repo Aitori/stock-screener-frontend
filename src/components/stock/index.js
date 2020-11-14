@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Chart from "../chart";
 import "./styles.scss";
 import configData from "../../config.json";
 import Button from "../button";
 import { useParams } from "react-router-dom";
 const Stock = React.forwardRef((props, ref) => {
+  // prevent setting state on component unmounting
+  const firstRef = useRef(false);
+
   const [stockData, setStockData] = useState();
   const [isBusy, setIsBusy] = useState(true);
   const [removed, setRemoved] = useState(false);
@@ -21,9 +24,10 @@ const Stock = React.forwardRef((props, ref) => {
       })
         .then((result) => result.json())
         .then((data) => {
-          if (mounted) {
+          if (mounted && !firstRef.current) {
             setStockData(data);
             setIsBusy(false);
+            firstRef.current = true;
           }
         });
     };
