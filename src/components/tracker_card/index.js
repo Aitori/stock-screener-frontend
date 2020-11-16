@@ -9,8 +9,8 @@ const TrackerCard = (props) => {
 
   useEffect(() => setNotes(props.notes), [props.notes]);
 
-  const updateNotes = async (n) => {
-    fetch(configData.ENDPOINT + "/update_notes/" + props.ticker + "&" + n, {
+  const updateNotes = async (notes) => {
+    fetch(configData.ENDPOINT + "/update_notes/" + props.ticker + "&" + notes, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
