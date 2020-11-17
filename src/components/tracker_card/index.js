@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./styles.scss";
 import configData from "../../config.json";
+import { useHistory } from "react-router-dom";
 
 const TrackerCard = (props) => {
+  const history = useHistory();
   const [notes, setNotes] = useState("");
   const percentage_change = parseFloat(props.percentage_change).toFixed(2);
   const [flash, setFlash] = useState(false);
@@ -53,7 +55,7 @@ const TrackerCard = (props) => {
         value={notes ? notes : ""}
         onBlur={() => updateNotes(notes)}
       />
-      <div className="tracker-card-click" onClick={props.onClick} />
+      <div className="tracker-card-click" onClick={() => history.push("/" + props.ticker)} />
       <div className="tracker-card-wrapper">
         <div className="tracker-card-small-text">Open: {` $${props.open}`}</div>
         <div className="tracker-card-small-text">{props.timestamp}</div>
