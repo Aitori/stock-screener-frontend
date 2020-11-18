@@ -4,7 +4,7 @@ import "./styles.scss";
 import configData from "../../config.json";
 import Button from "../button";
 import { useParams } from "react-router-dom";
-const Stock = React.forwardRef((props, ref) => {
+const Stock = (props, ref) => {
   // prevent setting state on component unmounting
   const firstRef = useRef(false);
 
@@ -54,6 +54,7 @@ const Stock = React.forwardRef((props, ref) => {
     </div>
   ) : (
     <div className="stock" ref={ref}>
+      {props.enabled ? "" : ""}
       <Chart prices={stockData.prices} ticker={ticker} />
       <div className="stock-info-box">
         <Button
@@ -117,6 +118,6 @@ const Stock = React.forwardRef((props, ref) => {
       </div>
     </div>
   );
-});
+};
 
-export default Stock;
+export default React.forwardRef(Stock);

@@ -6,7 +6,7 @@ import Chart from "../chart";
 import TrackerCard from "../tracker_card";
 
 // component for front page of site
-const FrontPage = React.forwardRef((props, ref) => {
+const FrontPage = (props, ref) => {
   // data states
   const [spyData, setSpyData] = useState(); // spy data graph
   const [trackers, setTrackers] = useState(); // list of trackers
@@ -50,6 +50,7 @@ const FrontPage = React.forwardRef((props, ref) => {
 
   return (
     <div className="front-page" ref={ref}>
+      {props.enabled ? "" : ""}
       {isSpyBusy ? (
         <div className="front-page-loading">Loading...</div>
       ) : (
@@ -66,6 +67,6 @@ const FrontPage = React.forwardRef((props, ref) => {
       </div>
     </div>
   );
-});
+};
 
-export default FrontPage;
+export default React.forwardRef(FrontPage);
