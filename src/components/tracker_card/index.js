@@ -12,8 +12,11 @@ const TrackerCard = (props) => {
   useEffect(() => setNotes(props.notes), [props.notes]);
 
   const updateNotes = async (notes) => {
-    const sendNotes = notes == null ? "" : notes;
-    fetch(configData.ENDPOINT + "/update_notes/" + props.ticker + "&" + sendNotes, {
+    const url =
+      notes == null
+        ? configData.ENDPOINT + "/update_notes/" + props.ticker + "/"
+        : configData.ENDPOINT + "/update_notes/" + props.ticker + "/" + notes;
+    fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -56,7 +59,10 @@ const TrackerCard = (props) => {
         value={notes ? notes : ""}
         onBlur={() => updateNotes(notes)}
       />
-      <div className="tracker-card-click" onClick={() => history.push("/" + props.ticker)} />
+      <div
+        className="tracker-card-click"
+        onClick={() => history.push("/" + props.ticker)}
+      />
       <div className="tracker-card-wrapper">
         <div className="tracker-card-small-text">Open: {` $${props.open}`}</div>
         <div className="tracker-card-small-text">{props.timestamp}</div>
