@@ -55,3 +55,33 @@
   opacity: 0;
   transition: opacity 500ms;
 }
+
+.app-locked {
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #222222;
+
+  &-text {
+    position: relative;
+    margin: 10px 0 0 0;
+    font-family: "Inter";
+    font-size: 1.2em;
+    background-color: #222222;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px white solid;
+    transition: box-shadow 200ms;
+    &:focus {
+      outline: none;
+    }
+    z-index: 50;
+    resize: none;
+    max-width: 200px;
+  }
+}
