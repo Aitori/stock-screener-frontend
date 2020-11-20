@@ -11,6 +11,7 @@ const Stock = (props, ref) => {
   const [stockData, setStockData] = useState();
   const [isBusy, setIsBusy] = useState(true);
   const [removed, setRemoved] = useState(false);
+  const [error, setError] = useState(false);
   const { ticker } = useParams();
   useEffect(() => {
     let mounted = true;
@@ -25,6 +26,10 @@ const Stock = (props, ref) => {
         .then((result) => result.json())
         .then((data) => {
           if (mounted && !firstRef.current) {
+            const tempData = data;
+            if ("error" in tempData) {
+              setError(true);
+            }
             setStockData(data);
             setIsBusy(false);
             firstRef.current = true;
@@ -51,6 +56,10 @@ const Stock = (props, ref) => {
   return isBusy ? (
     <div className="stock-loading" ref={ref}>
       LOADING...
+    </div>
+  ) : error ? (
+    <div className="stock-loading" ref={ref}>
+      Error: {stockData.error}
     </div>
   ) : (
     <div className="stock" ref={ref}>

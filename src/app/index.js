@@ -9,7 +9,7 @@ import FrontPage from "../components/front_page";
 import NavBar from "../components/nav_bar";
 
 const App = () => {
-  const pass = "placeholder";
+  const pass = "omegalul";
   const [locked, setLocked] = useState(true);
   const nodeRefFrontPage = useRef(null);
   const nodeRefStock = useRef(null);
