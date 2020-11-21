@@ -28,6 +28,17 @@
     padding: 10px;
   }
 
+  &-grid {
+    padding: 10px;
+    display: grid;
+
+    grid-template-columns: 50% 50%;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 100%;
+    }
+  }
+
   &-add {
     position: absolute;
     right: 20px;

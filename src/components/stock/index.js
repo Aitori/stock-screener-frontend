@@ -4,6 +4,8 @@ import "./styles.scss";
 import configData from "../../config.json";
 import Button from "../button";
 import { useParams } from "react-router-dom";
+import NewsCard from "../news_card";
+import TweetsCard from "../tweets_card";
 const Stock = (props, ref) => {
   // prevent setting state on component unmounting
   const firstRef = useRef(false);
@@ -95,34 +97,16 @@ const Stock = (props, ref) => {
           <b>Description:</b> {stockData.fundamentals.description}
         </div>
       </div>
-      <div className="stock-info-box">
-        <div className="stock-news">News</div>
+      <div className="stock-news">News</div>
+      <div className="stock-grid">
         {stockData.news.map((e, i) => (
-          <div key={i}>
-            <a
-              href={e.url}
-              className="stock-a"
-              target="_blank"
-              rel="noreferrer"
-            >
-              {e.url}
-            </a>
-          </div>
+          <NewsCard key={i} {...e} />
         ))}
       </div>
-      <div className="stock-info-box">
-        <div className="stock-news">Tweets</div>
+      <div className="stock-news">Tweets</div>
+      <div className="stock-grid">
         {stockData.tweets.map((e, i) => (
-          <div key={i}>
-            <a
-              href={e.url}
-              className="stock-a"
-              target="_blank"
-              rel="noreferrer"
-            >
-              {e.url}
-            </a>
-          </div>
+          <TweetsCard key={i} {...e} />
         ))}
       </div>
     </div>

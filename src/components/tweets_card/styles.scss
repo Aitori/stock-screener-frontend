@@ -1,4 +1,4 @@
-.news-card {
+.tweets-card {
   border: 1px white solid;
 
   margin: 20px;
@@ -14,9 +14,6 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  &-title {
-    font-size: 1.2em;
-  }
 
   &-summary {
     font-size: 0.6em;
