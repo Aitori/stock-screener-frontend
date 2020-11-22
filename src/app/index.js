@@ -18,6 +18,7 @@ const App = () => {
       {locked ? (
         <div className="app-locked">
           <input
+            placeholder="Do Not Enter"
             className="app-locked-text"
             type="password"
             onChange={(e) => {
@@ -56,7 +57,7 @@ const App = () => {
                   classNames="page"
                   unmountOnExit
                 >
-                  <Stock ref={nodeRefStock} />
+                  <Stock ref={nodeRefStock} key={window.location.pathname} />
                 </CSSTransition>
               )}
             </Route>

@@ -15,6 +15,7 @@ const Stock = (props, ref) => {
   const [removed, setRemoved] = useState(false);
   const [error, setError] = useState(false);
   const { ticker } = useParams();
+
   useEffect(() => {
     let mounted = true;
     if (ticker === "") return;
