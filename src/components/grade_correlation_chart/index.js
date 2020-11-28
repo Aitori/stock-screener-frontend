@@ -3,15 +3,11 @@ import "./styles.scss";
 import configData from "../../config.json";
 
 const GradeCorrelationChart = () => {
-  // functional states
-  const [correlationsToggle, setCorrelationsToggle] = useState();
-  const [gradeToggle, setGradeToggle] = useState();
-
   // data states
-  const [correlationsDay, setCorrelationsDay] = useState();
-  const [correlationsMinute, setCorrelationsMinute] = useState();
-  const [gradeDay, setGradeDay] = useState();
-  const [gradeMinute, setGradeMinute] = useState();
+  const [correlationsDay, setCorrelationsDay] = useState([]);
+  const [correlationsMinute, setCorrelationsMinute] = useState([]);
+  const [gradeDay, setGradeDay] = useState([]);
+  const [gradeMinute, setGradeMinute] = useState([]);
 
   // is busy states
   const [isBusyCorrelationsDay, setIsBusyCorrelationsDay] = useState(true);
@@ -77,83 +73,98 @@ const GradeCorrelationChart = () => {
   }, []);
 
   return (
-    <div className="grade-correlation-chart">
-      {isBusyCorrelationsDay && isBusyCorrelationsMinute ? (
+    <div>
+      {isBusyCorrelationsDay &&
+      isBusyCorrelationsMinute &&
+      isBusyGradeDay &&
+      isBusyGradeMinute ? (
         <div className="app-loading">Loading...</div>
       ) : (
         <div className="grade-correlation-chart">
-          <div
-            className="grade-correlation-chart-toggle-button"
-            onClick={() => {
-              setCorrelationsToggle(!correlationsToggle);
-            }}
-          >
-            {!correlationsToggle ? "Minute Correlation" : "Day Correlation"}
-          </div>
-          {!isBusyCorrelationsDay &&
-            correlationsToggle &&
-            correlationsDay.map((e) => (
-              <div key={e.sector} className="grade-correlation-chart-item">
-                <div className="grade-correlation-chart-sector">{e.sector}</div>
-                <div className="grade-correlation-chart-percentage">
-                  {(parseFloat(e.correlation) * 100).toFixed(1)}%
-                </div>
-              </div>
-            ))}
-          {!isBusyCorrelationsMinute &&
-            !correlationsToggle &&
-            correlationsMinute.map((e) => (
-              <div key={e.sector} className="grade-correlation-chart-item">
-                <div className="grade-correlation-chart-sector">{e.sector}</div>
-                <div className="grade-correlation-chart-percentage">
-                  {(parseFloat(e.correlation) * 100).toFixed(1)}%
-                </div>
-              </div>
-            ))}
-        </div>
-      )}
-      {isBusyGradeDay && isBusyGradeMinute ? (
-        <div className="app-loading">Loading...</div>
-      ) : (
-        <div className="grade-correlation-chart">
-          <div
-            className="grade-correlation-chart-toggle-button"
-            onClick={() => {
-              setGradeToggle(!gradeToggle);
-            }}
-          >
-            {!gradeToggle ? "Minute Market Cap Grade" : "Day Market Cap Grade"}
-          </div>
-          {!isBusyGradeDay &&
-            gradeToggle &&
-            gradeDay.map((e) => (
-              <div key={e.grade} className="grade-correlation-chart-item">
-                <div className="grade-correlation-chart-sector">Grade: {e.grade}</div>
-                <div className="grade-correlation-chart-percentage">
-                  Mean:
-                  {parseFloat(e.mean_percent_change).toFixed(1)}%
-                </div>
-                <div className="grade-correlation-chart-percentage">
-                  STDV:
-                  {parseFloat(e.std_dev_percent_change).toFixed(1)}%
-                </div>
-              </div>
-            ))}
-          {!isBusyGradeMinute &&
-            !gradeToggle &&
-            gradeMinute.map((e) => (
-              <div key={e.grade} className="grade-correlation-chart-item">
-                <div className="grade-correlation-chart-sector">Grade:{e.grade}</div>
-                <div className="grade-correlation-chart-percentage">
-                  Mean:
-                  {(parseFloat(e.mean_percent_change) * 100).toFixed(1)}‱
-                </div>
-                <div className="grade-correlation-chart-percentage">
-                  STDV:
-                  {(parseFloat(e.std_dev_percent_change) * 100).toFixed(1)}‱
-                </div>
-              </div>
-            ))}
+          <table className="grade-correlation-chart-table">
+            <thead>
+              <tr>
+                <th colSpan="2">Minute Correlation</th>
+              </tr>
+              <tr>
+                <th>Sector</th>
+                <th>Correlation</th>
+              </tr>
+            </thead>
+            <tbody>
+              {correlationsMinute.map((e) => (
+                <tr key={e.sector}>
+                  <td>{e.sector}</td>
+                  <td>{e.correlation.toFixed(2)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <table>
+            <thead>
+              <tr>
+                <th colSpan="2">Day Correlation</th>
+              </tr>
+              <tr>
+                <th>Sector</th>
+                <th>Correlation</th>
+              </tr>
+            </thead>
+            <tbody>
+              {correlationsDay.map((e) => (
+                <tr key={e.sector}>
+                  <td>{e.sector}</td>
+                  <td>{e.correlation.toFixed(2)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <table>
+            <thead>
+              <tr>
+                <th colSpan="3">Minute Market Cap Grade</th>
+              </tr>
+              <tr>
+                <th>Grade</th>
+                <th>Mean</th>
+                <th>Standard Deviation</th>
+              </tr>
+            </thead>
+            <tbody>
+              {gradeMinute.map((e) => (
+                <tr>
+                  <td>{e.grade}</td>
+                  <td>
+                    {(parseFloat(e.mean_percent_change) * 100).toFixed(1)}‱
+                  </td>
+                  <td>
+                    {(parseFloat(e.std_dev_percent_change) * 100).toFixed(1)}‱
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <table>
+            <thead>
+              <tr>
+                <th colSpan="3">Day Market Cap Grade</th>
+              </tr>
+              <tr>
+                <th>Grade</th>
+                <th>Mean</th>
+                <th>Standard Deviation</th>
+              </tr>
+            </thead>
+            <tbody>
+              {gradeDay.map((e) => (
+                <tr key={e.grade}>
+                  <td>{e.grade}</td>
+                  <td>{parseFloat(e.mean_percent_change).toFixed(1)}%</td>
+                  <td>{parseFloat(e.std_dev_percent_change).toFixed(1)}%</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
     </div>

@@ -2,9 +2,9 @@
   display: flex;
   flex-direction: row;
   color: white;
-  width: 100%;
   justify-content: space-between;
   flex-wrap: wrap;
+  margin: 20px;
 
   &-item {
     display: flex;
@@ -24,26 +24,5 @@
     margin: 10px 0 0 0;
     font-size: 30px;
     text-align: center;
-  }
-
-  &-toggle-button {
-    width: 120px;
-    border: white 0.5px solid;
-    font-size: 20px;
-    padding: 10px;
-    border-radius: 10px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: 0.3s;
-    user-select: none;
-    &:hover {
-      cursor: pointer;
-      color: purple;
-    }
-    &:active {
-      color: blue;
-    }
   }
 }
