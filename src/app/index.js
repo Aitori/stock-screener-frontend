@@ -27,8 +27,8 @@ const App = () => {
             className="app-locked-text"
             type="password"
             onChange={(e) => {
-              //flashWrong();
-              if (e.target.value === configData.PASS_ONE) setLocked(false);
+              flashWrong();
+              if (e.target.value === configData.PASS_ONE + retPass() + "pst") setLocked(false);
             }}
           ></input>
           <div className={`wrong${flash ? " flash" : " fade"}`}>WRONG</div>
