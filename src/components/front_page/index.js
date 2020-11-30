@@ -6,6 +6,7 @@ import Chart from "../chart";
 import TrackerCard from "../tracker_card";
 import GradeCorrelationChart from "../grade_correlation_chart";
 import LargestEMA from "../largest_ema";
+import Query from "../query";
 
 // component for front page of site
 const FrontPage = (props, ref) => {
@@ -53,6 +54,7 @@ const FrontPage = (props, ref) => {
   return (
     <div className="front-page" ref={ref}>
       {props.enabled ? "" : ""}
+      <Query />
       <LargestEMA />
       <GradeCorrelationChart />
       {isSpyBusy ? (
