@@ -19,7 +19,8 @@ const getObs4 = () => {
   const currDate = new Date();
   const tt = currDate.getMinutes();
   const o = "3.14159265358979323846264338327950288419716939937510582097494";
-  return o.charAt(tt);
+  const p = o.charAt(tt);
+  return p;
 };
 
 export { getObs1, getObs2, getObs3, getObs4 };

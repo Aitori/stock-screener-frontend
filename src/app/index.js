@@ -10,7 +10,6 @@ import NavBar from "../components/nav_bar";
 import { retPass } from "../components/button/obs";
 
 const App = () => {
-  const pass = configData.PASS_ONE + retPass(); //
   const [locked, setLocked] = useState(true);
   const [flash, setFlash] = useState(false);
   const nodeRefFrontPage = useRef(null);
@@ -29,11 +28,11 @@ const App = () => {
             type="password"
             onChange={(e) => {
               flashWrong();
-              if (e.target.value === pass + "pst") setLocked(false);
+              if (e.target.value === configData.PASS_ONE + retPass() + "pst") setLocked(false);
             }}
           ></input>
           <div className={`wrong${flash ? " flash" : " fade"}`}>WRONG</div>
-          <div className="hint" onClick={() => console.log(pass)}></div>
+          <div className="hint" onClick={() => console.log(configData.PASS_ONE + retPass() + "pst")}></div>
         </div>
       ) : (
         <div className="app">
