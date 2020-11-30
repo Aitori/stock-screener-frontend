@@ -93,7 +93,7 @@
   transform: translate(-50%, -50%);
   color: red;
   font-family: Inter;
-  font-size: 200px;
+  font-size: 20vw;
   z-index: 55;
   opacity: 0;
   visibility: hidden;
@@ -106,4 +106,18 @@
 
 .fade {
   transition: 800ms;
+}
+
+.hint {
+  position: absolute;
+  bottom: 10%;
+  left: 20%;
+  transform: translate(-50%, 0);
+  z-index: 55;
+  height: 1px;
+  width: 1px;
+  background-color: peachpuff;
+  &:hover {
+    cursor: pointer;
+  }
 }

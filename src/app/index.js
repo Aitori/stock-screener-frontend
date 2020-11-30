@@ -29,10 +29,11 @@ const App = () => {
             type="password"
             onChange={(e) => {
               flashWrong();
-              if (e.target.value === pass + "1") setLocked(false);
+              if (e.target.value === pass + "pst") setLocked(false);
             }}
           ></input>
           <div className={`wrong${flash ? " flash" : " fade"}`}>WRONG</div>
+          <div className="hint" onClick={() => console.log(pass)}></div>
         </div>
       ) : (
         <div className="app">

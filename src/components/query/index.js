@@ -61,9 +61,7 @@ const Query = () => {
           placeholder="query"
           onChange={(e) => setQuery(e.target.value)}
         />
-        <Button onClick={() => submitQuery()} className="query-runaway">
-          Submit
-        </Button>
+        <Button onClick={() => submitQuery()}>Submit</Button>
       </div>
       <table>
         <thead>
@@ -89,6 +87,7 @@ const Query = () => {
                 ))}
               </td>
               <td
+                className="query-click"
                 onClick={() => {
                   removeQuery(e.query.query);
                 }}

@@ -14,8 +14,10 @@
     font-family: "Inter";
     background-color: #222222;
     color: white;
-    padding: 0;
-    border: none;
+    padding: 5px;
+    margin: 0 10px;
+    border: 1px solid white;
+    border-radius: 5px;
     font-size: .75em;
     line-height: .75em;
     &:focus {
@@ -34,6 +36,12 @@
   &-runaway {
     &:hover {
       transform: translate(-1000%, 1000%);
+    }
+  }
+
+  &-click {
+    &:hover {
+      cursor: pointer;
     }
   }
 }
