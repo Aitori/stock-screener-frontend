@@ -81,10 +81,12 @@ const GradeCorrelationChart = () => {
         <div className="app-loading">Loading...</div>
       ) : (
         <div className="grade-correlation-chart">
-          <table className="grade-correlation-chart-table">
+          <table>
             <thead>
               <tr>
-                <th colSpan="2">Minute Correlation</th>
+                <th colSpan="2" className="grade-correlation-chart-title">
+                  Minute Correlation
+                </th>
               </tr>
               <tr>
                 <th>Sector</th>
@@ -103,7 +105,9 @@ const GradeCorrelationChart = () => {
           <table>
             <thead>
               <tr>
-                <th colSpan="2">Day Correlation</th>
+                <th colSpan="2" className="grade-correlation-chart-title">
+                  Day Correlation
+                </th>
               </tr>
               <tr>
                 <th>Sector</th>
@@ -122,7 +126,9 @@ const GradeCorrelationChart = () => {
           <table>
             <thead>
               <tr>
-                <th colSpan="3">Minute Market Cap Grade</th>
+                <th colSpan="3" className="grade-correlation-chart-title">
+                  Minute Market Cap Grade
+                </th>
               </tr>
               <tr>
                 <th>Grade</th>
@@ -132,7 +138,7 @@ const GradeCorrelationChart = () => {
             </thead>
             <tbody>
               {gradeMinute.map((e) => (
-                <tr>
+                <tr key={e.grade}>
                   <td>{e.grade}</td>
                   <td>
                     {(parseFloat(e.mean_percent_change) * 100).toFixed(1)}‱
@@ -147,7 +153,9 @@ const GradeCorrelationChart = () => {
           <table>
             <thead>
               <tr>
-                <th colSpan="3">Day Market Cap Grade</th>
+                <th colSpan="3" className="grade-correlation-chart-title">
+                  Day Market Cap Grade
+                </th>
               </tr>
               <tr>
                 <th>Grade</th>
