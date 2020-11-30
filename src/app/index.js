@@ -2,17 +2,23 @@ import React, { useRef, useState } from "react";
 import "./styles.scss";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
-
+import configData from "../config.json";
 // component imports
 import Stock from "../components/stock";
 import FrontPage from "../components/front_page";
 import NavBar from "../components/nav_bar";
+import { retPass } from "../components/button/obs";
 
 const App = () => {
-  const pass = "s"; //(┛ಠ_ಠ)┛彡┻━┻
+  const pass = configData.PASS_ONE + retPass(); //
   const [locked, setLocked] = useState(true);
+  const [flash, setFlash] = useState(false);
   const nodeRefFrontPage = useRef(null);
   const nodeRefStock = useRef(null);
+  const flashWrong = () => {
+    setFlash(true);
+    setTimeout(() => setFlash(false), 10);
+  };
   return (
     <Router>
       {locked ? (
@@ -22,9 +28,11 @@ const App = () => {
             className="app-locked-text"
             type="password"
             onChange={(e) => {
-              if (e.target.value === pass) setLocked(false);
+              flashWrong();
+              if (e.target.value === pass + "1") setLocked(false);
             }}
           ></input>
+          <div className={`wrong${flash ? " flash" : " fade"}`}>WRONG</div>
         </div>
       ) : (
         <div className="app">

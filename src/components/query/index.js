@@ -61,7 +61,9 @@ const Query = () => {
           placeholder="query"
           onChange={(e) => setQuery(e.target.value)}
         />
-        <Button onClick={() => submitQuery()}>Submit</Button>
+        <Button onClick={() => submitQuery()} className="query-runaway">
+          Submit
+        </Button>
       </div>
       <table>
         <thead>
@@ -69,23 +71,29 @@ const Query = () => {
             <th>Name</th>
             <th>Query</th>
             <th>Postfix</th>
+            <th>Tickers</th>
           </tr>
         </thead>
         <tbody>
           {allQueries.map((e) => (
-            <tr
-              key={e.query.name}
-              onClick={() => {
-                removeQuery(e.query.query);
-              }}
-            >
-              <td>{e.query.name}</td>
-              <td>{e.query.query}</td>
-              <td>{e.query.postfix}</td>
+            <tr key={e.query.name}>
+              <td className="query-query">{e.query.name}</td>
+              <td className="query-query">{e.query.query}</td>
+              <td className="query-query">{e.query.postfix}</td>
               <td>
-                {e.tickers.map((e) => (
-                  <span key={e}>{e},</span>
+                {e.tickers.map((f, i) => (
+                  <span key={f} className="query-tickers">
+                    {f}
+                    {i === e.tickers.length - 1 ? "" : ", "}
+                  </span>
                 ))}
+              </td>
+              <td
+                onClick={() => {
+                  removeQuery(e.query.query);
+                }}
+              >
+                Remove
               </td>
             </tr>
           ))}

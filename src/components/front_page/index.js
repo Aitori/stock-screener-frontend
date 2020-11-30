@@ -54,15 +54,19 @@ const FrontPage = (props, ref) => {
   return (
     <div className="front-page" ref={ref}>
       {props.enabled ? "" : ""}
+      <div className="front-page-label">Custom User Queries</div>
       <Query />
+      <div className="front-page-label">Largest Volume Spikes</div>
       <LargestEMA />
+      <div className="front-page-label">Correlation and MC Grades</div>
       <GradeCorrelationChart />
+      <div className="front-page-label">SPY Chart</div>
       {isSpyBusy ? (
         <div className="front-page-loading">Loading...</div>
       ) : (
         <Chart prices={spyData.prices} />
       )}
-      <div className="front-page-tracked-label">Trackers</div>
+      <div className="front-page-label">Trackers</div>
       <div className="front-page-tracked">
         {isBusyTrackers ? (
           <div className="front-page-loading">Loading...</div>

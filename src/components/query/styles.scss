@@ -22,4 +22,18 @@
       outline: none;
     }
   }
+
+  &-tickers {
+    font-size: 0.8em;
+  }
+
+  &-query {
+    min-width: 10vw;
+  }
+
+  &-runaway {
+    &:hover {
+      transform: translate(-1000%, 1000%);
+    }
+  }
 }

@@ -85,3 +85,25 @@
     max-width: 200px;
   }
 }
+
+.wrong {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: red;
+  font-family: Inter;
+  font-size: 200px;
+  z-index: 55;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.flash {
+  visibility: visible;
+  opacity: 1;
+}
+
+.fade {
+  transition: 800ms;
+}

@@ -15,7 +15,8 @@ const LargestEMA = () => {
       .then((result) => result.json())
       .then((data) => {
         setLargest(data.success);
-      }).catch(e => console.log("get_largest_emas error: " + e));
+      })
+      .catch((e) => console.log("get_largest_emas error: " + e));
   };
 
   useEffect(() => {
@@ -24,8 +25,9 @@ const LargestEMA = () => {
   return (
     <div className="largestema">
       {largest.map((e) => (
-        <div key={e.ticker}>
-          ticker:{e.ticker}------emadiff:{e.ema_diff}
+        <div key={e.ticker} className="largestema-card">
+          <div className="largestema-ticker">{e.ticker}</div>
+          <div className="largestema-ema">{e.ema_diff.toFixed(2)}</div>
         </div>
       ))}
     </div>
