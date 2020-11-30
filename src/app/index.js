@@ -27,7 +27,7 @@ const App = () => {
             className="app-locked-text"
             type="password"
             onChange={(e) => {
-              flashWrong();
+              //flashWrong();
               if (e.target.value === configData.PASS_ONE) setLocked(false);
             }}
           ></input>
