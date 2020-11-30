@@ -2,12 +2,10 @@ import React, { useRef, useState } from "react";
 import "./styles.scss";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
-import configData from "../config.json";
 // component imports
 import Stock from "../components/stock";
 import FrontPage from "../components/front_page";
 import NavBar from "../components/nav_bar";
-import { retPass } from "../components/button/obs";
 
 const App = () => {
   const [locked, setLocked] = useState(true);
@@ -28,11 +26,10 @@ const App = () => {
             type="password"
             onChange={(e) => {
               flashWrong();
-              if (e.target.value === configData.PASS_ONE + retPass() + "pst") setLocked(false);
+              if (e.target.value === "1234") setLocked(false);
             }}
           ></input>
           <div className={`wrong${flash ? " flash" : " fade"}`}>WRONG</div>
-          <div className="hint" onClick={() => console.log(configData.PASS_ONE + retPass() + "pst")}></div>
         </div>
       ) : (
         <div className="app">
