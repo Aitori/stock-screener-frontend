@@ -63,22 +63,26 @@ const Query = () => {
         />
         <Button onClick={() => submitQuery()}>Submit</Button>
       </div>
-      <table>
+      <table className="query-table">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Query</th>
-            <th>Postfix</th>
-            <th>Tickers</th>
+            <th className="query-bottom query-right">Name</th>
+            <th className="query-bottom query-right">Query</th>
+            <th className="query-bottom query-right">Postfix</th>
+            <th className="query-bottom query-right">Tickers</th>
+            <th className="query-bottom query-right"></th>
           </tr>
         </thead>
         <tbody>
-          {allQueries.map((e) => (
-            <tr key={e.query.name}>
-              <td className="query-query">{e.query.name}</td>
-              <td className="query-query">{e.query.query}</td>
-              <td className="query-query">{e.query.postfix}</td>
-              <td>
+          {allQueries.map((e, i) => (
+            <tr
+              key={e.query.name}
+              className={`${i % 2 === 0 ? " query-odd" : ""}`}
+            >
+              <td className="query-query query-right">{e.query.name}</td>
+              <td className="query-query query-right">{e.query.query}</td>
+              <td className="query-query query-right">{e.query.postfix}</td>
+              <td className="query-right">
                 {e.tickers.map((f, i) => (
                   <span key={f} className="query-tickers">
                     {f}
