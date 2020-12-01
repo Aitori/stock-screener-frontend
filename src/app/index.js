@@ -8,7 +8,7 @@ import FrontPage from "../components/front_page";
 import NavBar from "../components/nav_bar";
 
 const App = () => {
-  const [locked, setLocked] = useState(true);
+  const [locked, setLocked] = useState(false);
   const [flash, setFlash] = useState(false);
   const nodeRefFrontPage = useRef(null);
   const nodeRefStock = useRef(null);

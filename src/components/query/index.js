@@ -46,7 +46,7 @@ const Query = () => {
 
   useEffect(() => {
     fetchLargest();
-  });
+  }, []);
 
   return (
     <div className="query">
