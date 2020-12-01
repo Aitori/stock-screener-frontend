@@ -21,7 +21,8 @@ const LargestEMA = () => {
 
   useEffect(() => {
     fetchLargest();
-  });
+  }, []);
+
   return (
     <div className="largestema">
       {largest.map((e) => (

@@ -68,4 +68,26 @@
   &-small-text{
     font-size: 8px;
   }
+
+  &-remove {
+    position: absolute;
+    top: -15px;
+    right: -20px;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 50%;
+    font-size: 15px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: .5s;
+    &:hover {
+      transform: scale(1.1);
+    }
+    &:active {
+      transform: scale(0.9);
+    }
+  }
 }

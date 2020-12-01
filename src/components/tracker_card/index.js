@@ -30,44 +30,54 @@ const TrackerCard = (props) => {
   };
 
   return (
-    <div
-      className="tracker-card"
-      style={{
-        borderColor: `${percentage_change > 0 ? "#62FF52" : "#FF4F4F"}`,
-      }}
-    >
-      <div className="tracker-card-wrapper">
-        <div className="tracker-card-ticker">{props.ticker}</div>
-        <div>
-          <div className="tracker-card-number">${props.close}</div>
-          <div className="tracker-card-number">
-            {percentage_change > 0 ? "+" : ""}
-            {percentage_change}%
+    <>
+      <div
+        className="tracker-card"
+        style={{
+          borderColor: `${percentage_change > 0 ? "#62FF52" : "#FF4F4F"}`,
+        }}
+      >
+        <div className="tracker-card-wrapper">
+          <div
+            className="tracker-card-remove"
+            onClick={props.removeTracker}
+          >
+            r
+          </div>
+          <div className="tracker-card-ticker">{props.ticker}</div>
+          <div>
+            <div className="tracker-card-number">${props.close}</div>
+            <div className="tracker-card-number">
+              {percentage_change > 0 ? "+" : ""}
+              {percentage_change}%
+            </div>
           </div>
         </div>
+        <textarea
+          className={`tracker-card-input${flash ? " tracker-card-border" : ""}`}
+          placeholder="Notes"
+          onChange={(e) => {
+            if (e.target.value == null) {
+              setNotes("");
+            } else {
+              setNotes(e.target.value);
+            }
+          }}
+          value={notes ? notes : ""}
+          onBlur={() => updateNotes(notes)}
+        />
+        <div
+          className="tracker-card-click"
+          onClick={() => history.push("/" + props.ticker)}
+        />
+        <div className="tracker-card-wrapper">
+          <div className="tracker-card-small-text">
+            Open: {` $${props.open}`}
+          </div>
+          <div className="tracker-card-small-text">{props.timestamp}</div>
+        </div>
       </div>
-      <textarea
-        className={`tracker-card-input${flash ? " tracker-card-border" : ""}`}
-        placeholder="Notes"
-        onChange={(e) => {
-          if (e.target.value == null) {
-            setNotes("");
-          } else {
-            setNotes(e.target.value);
-          }
-        }}
-        value={notes ? notes : ""}
-        onBlur={() => updateNotes(notes)}
-      />
-      <div
-        className="tracker-card-click"
-        onClick={() => history.push("/" + props.ticker)}
-      />
-      <div className="tracker-card-wrapper">
-        <div className="tracker-card-small-text">Open: {` $${props.open}`}</div>
-        <div className="tracker-card-small-text">{props.timestamp}</div>
-      </div>
-    </div>
+    </>
   );
 };
 

@@ -46,6 +46,16 @@ const FrontPage = (props, ref) => {
       });
   };
 
+  const removeTracker = async (ticker) => {
+    await fetch(configData.ENDPOINT + "/remove_tracker/" + ticker, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    fetchTrackers();
+  };
+
   useEffect(() => {
     fetchSpyData();
     fetchTrackers();
@@ -72,7 +82,15 @@ const FrontPage = (props, ref) => {
           <div className="front-page-loading">Loading...</div>
         ) : (
           !isBusyTrackers &&
-          trackers.map((e) => <TrackerCard key={e.ticker} {...e} />)
+          trackers.map((e) => (
+            <TrackerCard
+              key={e.ticker}
+              {...e}
+              removeTracker={() => {
+                removeTracker(e.ticker);
+              }}
+            />
+          ))
         )}
       </div>
     </div>
