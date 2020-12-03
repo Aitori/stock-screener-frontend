@@ -67,6 +67,10 @@ const FrontPage = (props, ref) => {
       <div className="front-page-label">Custom User Queries</div>
       <Query />
       <div className="front-page-label">Largest Volume Spikes</div>
+      <div style={{ color: "white" }}>
+        The five largest ema with the ratio shown as the number below the
+        ticker.
+      </div>
       <LargestEMA />
       <div className="front-page-label">Correlation and MC Grades</div>
       <GradeCorrelationChart />

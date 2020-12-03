@@ -50,6 +50,31 @@ const Query = () => {
 
   return (
     <div className="query">
+      <div>Follow Python Formatting!</div>
+      <div className="query-i">
+        Data Available in arrays: <br />
+        Day Candles -- (o - open), (c - close), (l - low), (h - high), (v -
+        volume)
+        <br />
+        Minute Candles -- (mo - open), (mc - close), (ml - low), (mh - high),
+        (mv - volume)
+        <br />
+        Operators (listed in order of operation): (mean, std), (/, *), (+, -),
+        (==, {">="}, {"<="}, {">"}, {"<"}), and, or
+        <br />
+        Format for mean and std -- [data array] mean [period] [day]
+        <br />
+        e.g. 'c mean 20 0' = 20-day closing price simple moving average on day 0
+        (most recent day)
+        <br />
+        e.g. 'h std 12 5' = 12-day high price standard deviation on day 5 (5
+        days ago)
+        <br/>
+        <br/>
+        Example Query: c[0] {">"} o[0] and c[1] {"<"} o[1] and c[0] {">"} 0.5 * (c std 20 0) + (c mean 20 0)
+        <br/>
+        The query finds tickers that have closing prices greater than its opening price for the current day, and have closing prices less than the opening price for the previous day. In addition, the closing price today be greater than half a standard deviation from the 20-day simple moving average.
+      </div>
       <div className="query-top">
         <input
           className="query-search"
@@ -70,7 +95,7 @@ const Query = () => {
             <th className="query-bottom query-right">Query</th>
             <th className="query-bottom query-right">Postfix</th>
             <th className="query-bottom query-right">Tickers</th>
-            <th className="query-bottom query-right"></th>
+            <th className="query-bottom"></th>
           </tr>
         </thead>
         <tbody>
