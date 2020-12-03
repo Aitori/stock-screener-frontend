@@ -68,9 +68,10 @@ const FrontPage = (props, ref) => {
       <Query />
       <div className="front-page-label">Largest Volume Spikes</div>
       <div style={{ color: "white" }}>
-        The five largest volume spikes according to our custom algorithm. The
-        values represent the ratio of the exponential moving average (EMA) with
-        a custom threshold based on the lagging EMA.
+        Real time calculation (updated every minute) of the five largest volume
+        spikes according to our custom algorithm. The values represent the ratio
+        of the exponential moving average (EMA) with a custom threshold based on
+        the lagging EMA.
       </div>
       <LargestEMA />
       <div className="front-page-label">Correlation and MC Grades</div>
