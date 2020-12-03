@@ -21,7 +21,7 @@ const LargestEMA = () => {
 
   useEffect(() => {
     fetchLargest();
-    setInterval(fetchLargest, 6000);
+    setInterval(() => fetchLargest(), 6000);
   }, []);
 
   return (
