@@ -68,7 +68,7 @@ const FrontPage = (props, ref) => {
       <Query />
       <div className="front-page-label">Largest Volume Spikes</div>
       <div style={{ color: "white" }}>
-        The five largest ema with the ratio shown as the number below the
+        The five largest exponential moving average (EMA) with the ratio shown as the number below the
         ticker.
       </div>
       <LargestEMA />
